@@ -1,0 +1,254 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Books API - test documentation with swagger",
+        "version": "1.0.0",
+        "description": "A simple CRUD API for managing books"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:4000",
+            "description": "Development server"
+        }
+    ],
+    "tags": [
+        {
+            "name": "books",
+            "description": "Operations related to books"
+        },
+        {
+            "name": "authors",
+            "description": "Operations related to authors"
+        }
+    ],
+    "paths": {
+        "/api/v1/books": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get all books",
+                "responses": {
+                    "200": {
+                        "description": "List of books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Create a new book",
+                "requestBody": {
+                    "description": "Book object that needs to be added",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/books/{id}": {
+            "get": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Get a book by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the book",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Update a book by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the book",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Book data to update",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookInput"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "books"
+                ],
+                "summary": "Delete a book by ID",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "ID of the book",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted"
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/authors": {
+            "get": {
+                "tags": [
+                    "authors"
+                ],
+                "summary": "Get all authors",
+                "responses": {
+                    "200": {
+                        "description": "List of authors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Author"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Book": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "1984"
+                    },
+                    "author": {
+                        "type": "string",
+                        "example": "George Orwell"
+                    }
+                }
+            },
+            "BookInput": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "example": "1984"
+                    },
+                    "author": {
+                        "type": "string",
+                        "example": "George Orwell"
+                    }
+                },
+                "required": [
+                    "title",
+                    "author"
+                ]
+            },
+            "Author": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "George Orwell"
+                    }
+                }
+            }
+        }
+    }
+}
